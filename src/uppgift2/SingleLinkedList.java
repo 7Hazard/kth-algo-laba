@@ -1,45 +1,65 @@
 package uppgift2;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 public class SingleLinkedList<E> {
     private Node<E> head;
+    private Node<E> tail;
     private int size;
 
     public SingleLinkedList() {
         head = null;
+        tail = null;
         size = 0;
     }
 
     public void add(int index, E item) {
         if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException(Integer.toString(index));
-        } else if (index == 0) // front
+        } 
+        else if (index == 0) // front
         {
-            // new node, head as next
-            head = new Node<E>(item, head);
-        } else if (index == size) // back
+            addFront(item);
+        } 
+        else if(index == size) // back
         {
-            // new node, no next
-            Node<E> node = getNode(index - 1);
-            node.next = new Node<E>(item, null);
-        } else // middle
+            addBack(item);
+        }
+        else // middle
         {
             Node<E> node = getNode(index - 1);
             node.next = new Node<E>(item, node.next);
+            size++;
         }
-        size++;
     }
 
     // originally add last
     public void addBack(E item) {
-        add(size, item);
+        // new node, no next
+        var newnode = new Node<>(item, null);
+
+        // if empty list, set tail
+        if(size == 0)
+            head = newnode;
+        else {
+            // before changing tail, set tail.next
+            tail.next = newnode;
+        }
+        
+        // change tail
+        tail = newnode;
+        
+        size++;
     }
 
     // originally addFirst
     public void addFront(E item) {
-        add(0, item);
+        // new node, head as next
+        head = new Node<E>(item, head);
+        
+        // if empty, head is also tail
+        if(size == 0)
+            tail = head;
+        
+        size++;
     }
 
     public E get(int index) {
@@ -52,9 +72,11 @@ public class SingleLinkedList<E> {
 
     //Returnerar null om noden saknas
     private Node<E> getNode(int index) {
-        if (index == 0) // first
+        if(index == 0) // first
             return head;
-
+        if(index == size-1) // last
+            return tail;
+        
         // middle
         Node<E> node = head;
         for (int i = 0; i < index && node != null; i++) {
@@ -64,27 +86,29 @@ public class SingleLinkedList<E> {
     }
 
     public void remove(int index) {
-        if (index < 0 || index > size - 1)
+        if(index < 0 || index > size-1)
             throw new IndexOutOfBoundsException(Integer.toString(index));
-        else if (index == 0) // if head
+        else if(index == 0) // if head
         {
+            if(head == tail)
+                tail = null;
             head = head.next; // head.next is null if head == tail
-        } else // if middle or tail
+        }
+        else // if middle or tail
         {
             // get the node before to be removed
-            var before = getNode(index - 1);
+            var before = getNode(index-1);
             // get node to be removed
             var toRemove = before.next;
-
+            
+            if(toRemove == tail)
+                tail = before;
+            
             // set before.next to the remove.next
             before.next = toRemove.next;
         }
 
         size--;
-    }
-
-    public Iterator<E> iterator() {
-        return new Itr(head);
     }
 
     private static class Node<E> {
@@ -94,49 +118,6 @@ public class SingleLinkedList<E> {
         public Node(E data, Node<E> next) {
             this.data = data;
             this.next = next;
-        }
-    }
-
-    private class Itr implements Iterator<E> {
-        Node<E> previousPrevious;
-        Node<E> previous;
-        Node<E> current;
-
-        public Itr(Node<E> start) {
-            previousPrevious = null;
-            previous = null;
-            current = start;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return current != null;
-        }
-
-        @Override
-        public E next() {
-            if (current == null)
-                throw new NoSuchElementException();
-            E returnValue = current.data;
-            if(previous != null)
-                previousPrevious = previous;
-            previous = current;
-            current = current.next;
-            return returnValue;
-        }
-
-        @Override
-        public void remove() {
-            if (previous == null)
-                throw new IllegalStateException();
-            else if (previous == head)
-                head = previous.next;
-            else
-                previousPrevious.next = previous.next;
-
-            // node in var previous was removed, reset
-            previous = null;
-            size--;
         }
     }
 }
