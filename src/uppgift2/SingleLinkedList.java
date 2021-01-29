@@ -31,6 +31,11 @@ public class SingleLinkedList<E> {
         }
     }
 
+    public void add(E item)
+    {
+        addBack(item);
+    }
+
     // originally add last
     public void addBack(E item) {
         // new node, no next
