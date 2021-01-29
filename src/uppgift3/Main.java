@@ -16,7 +16,7 @@ public class Main {
 
             assert list.get(0) == 66;
             assert list.get(1) == 60;
-            System.out.println("OK remove first");
+            System.out.println("OK remove first "+list);
         }
         { // remove second
             var list = new SingleLinkedList<Integer>();
@@ -30,7 +30,7 @@ public class Main {
 
             assert list.get(0) == 69;
             assert list.get(1) == 60;
-            System.out.println("OK remove second");
+            System.out.println("OK remove second "+list);
         }
         { // remove last
             var list = new SingleLinkedList<Integer>();
@@ -45,7 +45,7 @@ public class Main {
 
             assert list.get(0) == 69;
             assert list.get(1) == 66;
-            System.out.println("OK remove last");
+            System.out.println("OK remove last "+list);
         }
         { // next remove next remove
             var list = new SingleLinkedList<Integer>();
@@ -60,7 +60,7 @@ public class Main {
             next = it.next();
 
             assert list.get(0) == 60;
-            System.out.println("OK next remove next remove");
+            System.out.println("OK next remove next remove "+list);
         }
         { // next next remove next remove next
             var list = new SingleLinkedList<Integer>();
@@ -78,7 +78,7 @@ public class Main {
 
             assert list.get(0) == 69;
             assert list.get(1) == 70;
-            System.out.println("OK next next remove next remove next");
+            System.out.println("OK next next remove next remove next "+list);
         }
         { // remove before next()
             var list = new SingleLinkedList<Integer>();
@@ -89,7 +89,7 @@ public class Main {
                 assert false;
                 System.out.println("Error");
             } catch (Exception e) {
-                System.out.println("OK remove before next()");
+                System.out.println("OK remove before next() "+list);
             }
         }
         { // remove twice
@@ -104,7 +104,7 @@ public class Main {
                 assert false;
                 System.out.println("Error");
             } catch (Exception e) {
-                System.out.println("OK remove twice");
+                System.out.println("OK remove twice "+list);
             }
         }
     }

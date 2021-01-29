@@ -63,11 +63,13 @@ public class SingleLinkedList<E> {
         return node;
     }
 
-    public void remove(int index) {
+    public E remove(int index) {
+        E ret = null;
         if (index < 0 || index > size - 1)
             throw new IndexOutOfBoundsException(Integer.toString(index));
         else if (index == 0) // if head
         {
+            ret = head.data;
             head = head.next; // head.next is null if head == tail
         } else // if middle or tail
         {
@@ -75,12 +77,14 @@ public class SingleLinkedList<E> {
             var before = getNode(index - 1);
             // get node to be removed
             var toRemove = before.next;
+            ret = toRemove.data;
 
             // set before.next to the remove.next
             before.next = toRemove.next;
         }
 
         size--;
+        return ret;
     }
 
     public Iterator<E> iterator() {
@@ -138,5 +142,25 @@ public class SingleLinkedList<E> {
             previous = null;
             size--;
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        Node<E> node = head;
+
+        if(size != 0) {
+            while (node != null) {
+                sb.append(node.data);
+                if (node.next != null) {
+                    sb.append(", ");
+                }
+                node = node.next;
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 }

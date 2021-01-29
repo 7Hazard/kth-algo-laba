@@ -124,4 +124,24 @@ public class SingleLinkedList<E> {
             this.next = next;
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        Node<E> node = head;
+
+        if(size != 0) {
+            while (node != null) {
+                sb.append(node.data);
+                if (node.next != null) {
+                    sb.append(", ");
+                }
+                node = node.next;
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }
