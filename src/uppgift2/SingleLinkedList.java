@@ -91,6 +91,7 @@ public class SingleLinkedList<E> {
             throw new IndexOutOfBoundsException(Integer.toString(index));
         else if(index == 0) // if head
         {
+            ret = head.data;
             if(head == tail)
                 tail = null;
             head = head.next; // head.next is null if head == tail
