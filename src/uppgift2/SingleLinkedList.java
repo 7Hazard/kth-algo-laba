@@ -85,7 +85,8 @@ public class SingleLinkedList<E> {
         return node;
     }
 
-    public void remove(int index) {
+    public E remove(int index) {
+        E ret = null;
         if(index < 0 || index > size-1)
             throw new IndexOutOfBoundsException(Integer.toString(index));
         else if(index == 0) // if head
@@ -100,7 +101,8 @@ public class SingleLinkedList<E> {
             var before = getNode(index-1);
             // get node to be removed
             var toRemove = before.next;
-            
+            ret = toRemove.data;
+
             if(toRemove == tail)
                 tail = before;
             
@@ -109,6 +111,7 @@ public class SingleLinkedList<E> {
         }
 
         size--;
+        return ret;
     }
 
     private static class Node<E> {
