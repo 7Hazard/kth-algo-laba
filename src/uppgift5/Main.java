@@ -1,5 +1,11 @@
 package uppgift5;
 
+/**
+ * Help with thought through following links
+ * https://en.wikipedia.org/wiki/Trie
+ * https://stackoverflow.com/questions/13109889/what-would-be-the-fastest-way-to-sort-an-array-of-words-containing-a-z-and-space
+ */
+
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -61,6 +67,7 @@ public class Main {
             return null;
         }
 
+        // rotate characters
         var copy = Arrays.copyOf(input, input.length);
 
         // save last char
