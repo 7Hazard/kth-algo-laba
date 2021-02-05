@@ -12,7 +12,7 @@ import java.util.HashSet;
 public class Main {
 
     static HashSet<String> paths = new HashSet<>();
-    static int minSteps = 15;
+    static int leastSteps = 15;
     private static char[] initialInput;
 
     public static void main(String[] args) {
@@ -29,11 +29,11 @@ public class Main {
     static Node b(Node parent, char[] input, String path, int steps) {
         if (steps == 15) return null;
         else if (isInOrder(input)) {
-            if (minSteps > steps) {
-                minSteps = steps;
+            if (leastSteps > steps) {
+                leastSteps = steps;
                 paths.clear();
             }
-            if (steps == minSteps) {
+            if (steps == leastSteps) {
                 paths.add("steps: " + steps
                         + ", path: " + path
                         + ", " + Arrays.toString(initialInput)
@@ -54,11 +54,11 @@ public class Main {
     static Node s(Node parent, char[] input, String path, int steps) {
         if (steps == 15) return null;
         else if (isInOrder(input)) {
-            if (minSteps > steps) {
-                minSteps = steps;
+            if (leastSteps > steps) {
+                leastSteps = steps;
                 paths.clear();
             }
-            if (steps == minSteps) {
+            if (steps == leastSteps) {
                 paths.add("steps: " + steps
                         + ", path: " + path
                         + ", " + Arrays.toString(initialInput)
