@@ -20,24 +20,8 @@ public class Main {
         long totalTime = 0; // total amount of time simulation executed in minutes
 
         // each iteration is imagined to be a 5 minutes timestep
-        do {
-            // add waited time for all unhandled requests
-            for (var r : unhandledLandRequests)
-                r.timeWaited += 5;
-            for (var r : unhandledLiftoffRequests)
-                r.timeWaited += 5;
-
-            // get chance of request
-            // kanske borde vara på slutet av intervallet enligt uppgiften
-            var chance = random.nextInt(101);
-            if (chance <= 5) // land
-            {
-                unhandledLandRequests.add(new Request());
-            } else if (chance >= 95) // liftoff
-            {
-                unhandledLiftoffRequests.add(new Request());
-            }
-
+        // only simulate for 10 years
+        while (totalTime != (10 * 365 * 24 * 60)) {
             // process current request
             if (currentRequestKind != RequestKind.None) // request is being processed
             {
@@ -47,9 +31,9 @@ public class Main {
                 if (currentRequestTimer == 20) {
                     // move to handled requests
                     if (currentRequestKind == RequestKind.Land)
-                        handledLandRequests.add(currentRequest);
+                        handledLandRequests.addLast(currentRequest);
                     else
-                        handledLiftoffRequests.add(currentRequest);
+                        handledLiftoffRequests.addLast(currentRequest);
 
                     // end request
                     currentRequestTimer = 0;
@@ -63,18 +47,32 @@ public class Main {
                 if (!unhandledLandRequests.isEmpty()) // land before liftoff
                 {
                     currentRequestKind = RequestKind.Land;
-                    currentRequest = unhandledLandRequests.remove(0);
+                    currentRequest = unhandledLandRequests.removeFirst();
                 } else if (!unhandledLiftoffRequests.isEmpty()) {
                     currentRequestKind = RequestKind.Liftoff;
-                    currentRequest = unhandledLiftoffRequests.remove(0);
+                    currentRequest = unhandledLiftoffRequests.removeFirst();
                 }
+            }
+
+            // add waited time for all unhandled requests
+            for (var r : unhandledLandRequests)
+                r.timeWaited += 5;
+            for (var r : unhandledLiftoffRequests)
+                r.timeWaited += 5;
+
+            // get chance of request
+            if (random.nextFloat() <= 0.05f) // land 0-5%
+            {
+                unhandledLandRequests.add(new Request());
+            }
+            if (random.nextFloat() <= 0.05f) // liftoff 0-5%
+            {
+                unhandledLiftoffRequests.add(new Request());
             }
 
             // increment total timelapse
             totalTime += 5;
-            // if 10 years has passed, stop simulation
-            // 10 years in minutes = 10 years * 365 days * 24 hours * 60 minutes
-        } while (totalTime != (10 * 365 * 24 * 60));
+        }
 
         // process and output stats
         float totalLandWait = 0;
