@@ -3,11 +3,22 @@ package uppgift6;
 import java.util.*;
 
 public class Main {
-    static StringBuilder solution = new StringBuilder();
+    static StringBuilder solution;
     static char[] result;
+    static int steps = 0;
 
     public static void main(String[] args) {
-        char[] initialInput = "BECAD".toCharArray();
+        run("BEACD");
+        run("BAECD");
+        run("EADBC");
+    }
+
+    static void run(String input)
+    {
+        solution = new StringBuilder();
+        result = null;
+        steps = 0;
+        char[] initialInput = input.toCharArray();
         var queue = new LinkedList<Node>();
         var top = new Node(null, initialInput);
         queue.addLast(top);
@@ -27,7 +38,11 @@ public class Main {
         }
 
         if (isSolved())
-            System.out.println(solution.reverse() + " " + Arrays.toString(result));
+            System.out.println(
+                    Arrays.toString(initialInput) + "->" + Arrays.toString(result)
+                    + ", " + solution.reverse()
+                    + ", " + steps + " steps"
+            );
         else
             System.out.println("No solutions found");
     }
@@ -96,7 +111,9 @@ public class Main {
             } else {
                 throw new IllegalStateException();
             }
+            steps++;
         }
+
         // continue walking up
         walkUpSolution(node.parent);
     }

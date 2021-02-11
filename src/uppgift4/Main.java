@@ -18,14 +18,14 @@ public class Main {
         var currentRequestTimer = 0; // max 20, +5 each timestep
 
         long totalTime = 0; // total amount of time simulation executed in minutes
+        var maxTime = 10 * 365 * 24 * 60; // only simulate for 10 years
 
         // each iteration is imagined to be a 5 minutes timestep
-        // only simulate for 10 years
-        while (totalTime != (10 * 365 * 24 * 60)) {
+        while (totalTime != maxTime) {
             // process current request
             if (currentRequestKind != RequestKind.None) // request is being processed
             {
-                currentRequestTimer += 5; // add 5 min to request timer
+                currentRequestTimer += 5;
 
                 // if request has been processed for 20 minutes
                 if (currentRequestTimer == 20) {
