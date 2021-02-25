@@ -3,8 +3,6 @@ package uppgift8;
 public class Main {
     public static class BinarySearchTree<E extends Comparable<E>> {
         public E getNextLarger(E input) {
-            if(root == null) return null;
-
             E result = null;
 
             var node = root;
@@ -101,10 +99,10 @@ public class Main {
 
     public static void main(String[] args) {
         var tree = new BinarySearchTree<Integer>();
-        tree.add(1);
         tree.add(2);
-        tree.add(5);
+        tree.add(1);
         tree.add(8);
+        tree.add(5);
         tree.add(12);
 
         System.out.println("-1: "+tree.getNextLarger(-1));
