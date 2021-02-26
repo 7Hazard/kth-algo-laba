@@ -67,7 +67,12 @@ public class Main {
         }
 
         // place box
-        puzzle[0][2] = Cell.box;
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter box row (0-4)");
+        var boxRow = scanner.nextInt();
+        System.out.println("Enter box column (0-4)");
+        var boxColumn = scanner.nextInt();
+        puzzle[boxRow][boxColumn] = Cell.box;
 
         steps.push(new Step(puzzle, 0, 0));
         while(!steps.empty())
