@@ -78,7 +78,7 @@ public class Main {
         while(!steps.empty())
         {
             var currentStep = steps.peek();
-            puzzle = currentStep.getPuzzle(); // get puzzle of current step
+            puzzle = currentStep.getPuzzle(); // copy puzzle of current step
 
             // check if current cell is empty
             if(puzzle[currentStep.row][currentStep.column] == Cell.empty)

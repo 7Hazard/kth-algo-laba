@@ -9,17 +9,16 @@ public class Main {
             while(node != null)
             {
                 var compare = node.data.compareTo(input);
-                if(compare <= 0) // node data < input
+                if(compare <= 0) // node data <= input
                 {
-                    if(result != null && node.data.compareTo(result) < 0)
-                        return result;
                     node = node.right;
                 }
-                else {
+                else { // node data > input
                     result = node.data;
                     node = node.left;
                 }
             }
+            // it will stop iterating if it goes to left but left is null
             return result;
         }
 
@@ -98,20 +97,35 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        var tree = new BinarySearchTree<Integer>();
-        tree.add(2);
-        tree.add(1);
-        tree.add(8);
-        tree.add(5);
-        tree.add(12);
-
-        System.out.println("-1: "+tree.getNextLarger(-1));
-        System.out.println("0: "+tree.getNextLarger(0));
-        System.out.println("1: "+tree.getNextLarger(1));
-        System.out.println("2: "+tree.getNextLarger(2));
-        System.out.println("3: "+tree.getNextLarger(3));
-        System.out.println("5: "+tree.getNextLarger(5));
-        System.out.println("12: "+tree.getNextLarger(12));
-        System.out.println("100: "+tree.getNextLarger(100));
+//        {
+//            var tree = new BinarySearchTree<Integer>();
+//            tree.add(2);
+//            tree.add(1);
+//            tree.add(8);
+//            tree.add(5);
+//            tree.add(12);
+//
+//            System.out.println("-1: "+tree.getNextLarger(-1));
+//            System.out.println("0: "+tree.getNextLarger(0));
+//            System.out.println("1: "+tree.getNextLarger(1));
+//            System.out.println("2: "+tree.getNextLarger(2));
+//            System.out.println("3: "+tree.getNextLarger(3));
+//            System.out.println("5: "+tree.getNextLarger(5));
+//            System.out.println("12: "+tree.getNextLarger(12));
+//            System.out.println("100: "+tree.getNextLarger(100));
+//        }
+        {
+            BinarySearchTree<Integer> bst= new BinarySearchTree<>();
+            buildTree(bst,new int[] {30,20,40,15,25,35,45,10,17,22,27,32,37,42,47,16,23,28,39,49,29,51});
+            System.out.println(bst);
+            for(int i=0;i<52;i++)
+            {
+                System.out.print(""+i+":"+bst.getNextLarger(i)+"\n");
+            }
+        }
+    }
+    public static void buildTree(BinarySearchTree<Integer> b, int[] v){
+        for(int data:v)
+            b.add(data);
     }
 }
